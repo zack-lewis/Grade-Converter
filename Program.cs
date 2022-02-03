@@ -32,8 +32,6 @@ namespace GradeConverter
             string additionalInput;
             bool additional = false;
 
-            
-            
             do {
                 Console.WriteLine("Do you have any more grades to put in? (yes/NO)");
 
@@ -58,9 +56,11 @@ namespace GradeConverter
                 }
             } while(additional == true);
 
+            // Ending the program, show the stats
             showStats(grades);
 
-
+            // Just trying to make them feel like we care. 
+            // Obviously we don't, otherwise this app would be waaaay more intuitive and pretty
             Console.WriteLine($"Thanks {name} for stopping by! See you again soon!");
 
         }
@@ -228,10 +228,11 @@ namespace GradeConverter
             name = $"{firstName} {lastName}";
             return name;
         }
-
+        
         // getNumGrades
+        // Summary: Prompt user for the number of grades that they want to enter
         // Arguments:
-        //      none
+        //      bool add - if this is the initial input or additional. default false, if true changes user prompt
         // Returns: int num - Number of grades user wants to input
         private static int getNumGrades(bool add = false) {
             int num = 0;
