@@ -17,17 +17,32 @@ handle all errors and invalid inputs
 
 
 initiate empty list
-start loop until Q
+ask user name
+welcome user
+ask user number of grades to input
+loop that many times
+  ask user for input
+  if outside of bounds, throw exception
+  if non-numeric, throw exception
+  if empty, reprompt
+
+pause with stats before exit application
+
+functions
+- add grades to list
+- convert numeric to letter grade
+- list grades
+- show stats
+- error handling
+- find highest grade in list
+- find lowest grade in list
+
+
+future ideas
+menu: 
+  start loop until Q
   display menu, ask for input
   1-> add grade
   2-> list grades
   3-> display statistics
   Q-> exit (display statistics)
-pause with stats before exit application
-
-functions
-- add grades
-- convert numeric to letter grade
-- list grades
-- show stats
-- error handling
