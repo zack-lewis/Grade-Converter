@@ -6,12 +6,12 @@ namespace GradeConverter
     class Program
     {
         // GLOBAL VARIABLES
-        const double upperLimit = 110;
+        const float upperLimit = 110f;
 
         static void Main(string[] args)
         {
             // VARIABLES
-            List<double> grades = new List<double>();
+            List<float> grades = new List<float>();
             int numGrades = 0;
             string name = "";
 
@@ -25,7 +25,7 @@ namespace GradeConverter
             Console.WriteLine("We can do that. Let's get them input into our system. Enter them below.");
             for(int i = 0; i < numGrades; i++) {
                 int p = i + 1;
-                double input = gradePrompt(p.ToString());
+                float input = gradePrompt(p.ToString());
                 grades = addGradeToList(input, grades);
             }
             
@@ -43,7 +43,7 @@ namespace GradeConverter
                     int moreGrades = getNumGrades(true);
                     for(int i = 0; i < moreGrades; i++) {
                         int p = i + 1;
-                        double input = gradePrompt(p.ToString());
+                        float input = gradePrompt(p.ToString());
                         grades = addGradeToList(input, grades);
                     }
                     additional = true;
@@ -70,11 +70,11 @@ namespace GradeConverter
         // Arguments: 
         //      string prompt - Prompt to use for user input
         // Returns: double grade - Grade from user 
-        private static double gradePrompt(string prompt) {
+        private static float gradePrompt(string prompt) {
             
                 // temp string for input
                 string temp = "";
-                double grade = 0;
+                float grade = 0f;
 
                 // ask user for input
                 Console.Write($"{prompt}: ");
@@ -87,8 +87,7 @@ namespace GradeConverter
                     }
                     
                     // if non-numeric, throw exception
-                    // grade = Int32.Parse(temp);
-                    grade = Double.Parse(temp);
+                    grade = float.Parse(temp);
 
                     // if outside of bounds, throw exception
                     if (grade > upperLimit || grade < 0) {
@@ -121,7 +120,7 @@ namespace GradeConverter
         //      double grade - grade to add to list
         //      List<double> list - initial list in which to add grade
         // Returns: List<double> list - List with grade added
-        private static List<double> addGradeToList(double grade, List<double> list) {
+        private static List<float> addGradeToList(float grade, List<float> list) {
             try {
                 list.Add(grade);
             }
@@ -137,7 +136,7 @@ namespace GradeConverter
         // Arguments:
         //      double grade - Grade to convert from Percent to Letter
         // Return: string letterGrade - Equivilent letter grade in string format
-        private static string percentToLetterGrade(double grade) {
+        private static string percentToLetterGrade(float grade) {
             string letterGrade = "";
             if(grade <= 60) {
                 letterGrade = "F";
@@ -169,7 +168,7 @@ namespace GradeConverter
         // Arguments:
         //      List<double> list - list of grades to display
         // Returns: none
-        private static void listGrades(List<double> list) {
+        private static void listGrades(List<float> list) {
             int count = list.Count;
             for(int i = 0; i < count; i++) {
                 string letter = percentToLetterGrade(list[i]);
@@ -181,9 +180,9 @@ namespace GradeConverter
         // Arguments:
         //      List<double> list - list of grades to search
         // Returns: double highest - Highest grade from list as a percentage 
-        private static double highestGrade(List<double> list) {
-            double highest = 0;
-            foreach(double g in list) {
+        private static float highestGrade(List<float> list) {
+            float highest = 0f;
+            foreach(float g in list) {
                 if(g > highest) {
                     highest = g;
                 }
@@ -195,9 +194,9 @@ namespace GradeConverter
         // Arguments:
         //      List<double> list - list of grades to search
         // Returns: double lowest - Lowest grade from list as a percentage 
-        private static double lowestGrade(List<double> list) {
-            double lowest = 999;
-            foreach(double g in list) {
+        private static float lowestGrade(List<float> list) {
+            float lowest = 999f;
+            foreach(float g in list) {
                 if(g < lowest) {
                     lowest = g;
                 }
@@ -266,25 +265,25 @@ namespace GradeConverter
         // Arguments: 
         //      List<double> list - list of grades
         // Returns: none
-        private static void showStats(List<double> list) {
+        private static void showStats(List<float> list) {
             int count = list.Count;
             if (count == 0){
                 Console.WriteLine("Houston, we have a problem. There's nothing here.");
                 return;
             }
 
-            double total = 0;
+            float total = 0f;
             
-            foreach(double l in list) {
+            foreach(float l in list) {
                 total = total + l;
             }
-            double highest = highestGrade(list);
+            float highest = highestGrade(list);
             string highLetter = percentToLetterGrade(highest);
 
-            double lowest = lowestGrade(list);
+            float lowest = lowestGrade(list);
             string lowLetter = percentToLetterGrade(lowest);
 
-            double average = total / count;
+            float average = total / count;
             string avgLetter = percentToLetterGrade(average);
 
             Console.WriteLine("Grade Statistics");
