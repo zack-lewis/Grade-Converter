@@ -295,14 +295,6 @@ namespace GradeConverter
             Console.WriteLine($"Lowest grade: {lowest} (Letter Grade {lowLetter})");
             Console.WriteLine("\nAll Grades: ");
             listGrades(list);
-
-
         }
-
-        // errorHandling
- 
- 
- 
- 
     }
 }
