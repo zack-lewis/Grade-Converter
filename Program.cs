@@ -15,20 +15,52 @@ namespace GradeConverter
             int numGrades = 0;
             string name = "";
 
-            name = greetUser();
+            // Greet the user, get their name
+    //        name = greetUser();
 
+            // Get the number of grades to input
             numGrades = getNumGrades();
             
             // loop that many times
-            Console.WriteLine("We can do that. Let's get them input into our system.");
+            Console.WriteLine("We can do that. Let's get them input into our system. Enter them below.");
             for(int i = 0; i < numGrades; i++) {
-                double input = gradePrompt(i+1.ToString());
+                int p = i + 1;
+                double input = gradePrompt(p.ToString());
                 grades = addGradeToList(input, grades);
             }
+            
+            string additionalInput;
+            bool additional = false;
+
+            
+            
+            do {
+                Console.WriteLine("Do you have any more grades to put in? (yes/NO)");
+
+                additionalInput = Console.ReadLine();
+                if(additionalInput == "") {
+                    additional = false;
+                }
+                else if(additionalInput.ToUpper() == "YES" || additionalInput.ToUpper() == "Y") {
+                    int moreGrades = getNumGrades(true);
+                    for(int i = 0; i < moreGrades; i++) {
+                        int p = i + 1;
+                        double input = gradePrompt(p.ToString());
+                        grades = addGradeToList(input, grades);
+                    }
+                    additional = true;
+                }
+                else if(additionalInput.ToUpper() == "NO" || additionalInput.ToUpper() == "N") {
+                    additional = false;
+                }
+                else { //if invalid answer, loop again. 
+                    additional = true;
+                }
+            } while(additional == true);
+
+            showStats(grades);
 
         }
-
-        // FUNCTIONS
 
         // gradePrompt
         // Summary: Prompt user for a grade and return it as a double
@@ -52,13 +84,26 @@ namespace GradeConverter
                     }
                     
                     // if non-numeric, throw exception
-                    grade = Int32.Parse(temp);
+                    // grade = Int32.Parse(temp);
+                    grade = Double.Parse(temp);
 
                     // if outside of bounds, throw exception
                     if (grade > upperLimit || grade < 0) {
                         throw new ArgumentOutOfRangeException();
                     }
                      
+                }
+                catch (FormatException) {
+                    Console.WriteLine("Sorry, bad format. Let's try that again.");
+                    grade = gradePrompt(prompt);
+                }
+                catch (ArgumentNullException) {
+                    Console.WriteLine("Grade cannot be empty!");
+                    grade = gradePrompt(prompt);
+                }
+                catch (ArgumentOutOfRangeException) {
+                    Console.WriteLine($"Sorry! Grade cannot be below 0 or above {upperLimit}");
+                    grade = gradePrompt(prompt);
                 }
                 catch (Exception) {
                     throw;
@@ -77,7 +122,7 @@ namespace GradeConverter
             try {
                 list.Add(grade);
             }
-            catch (Exception ex) {
+            catch (Exception) {
                 throw;
             }
 
@@ -106,7 +151,7 @@ namespace GradeConverter
             else if(grade <= 100) {
                 letterGrade = "A";
             }
-            else if(grade > 100) {
+            else if(grade > 100 && grade <= upperLimit) {
                 letterGrade = "A+";
             }
             else {
@@ -122,13 +167,12 @@ namespace GradeConverter
         //      List<double> list - list of grades to display
         // Returns: none
         private static void listGrades(List<double> list) {
-            for(int i = 0; i < list.Count(); i++) {
-                Console.WriteLine($"{i+1}: {list[i]}");
+            int count = list.Count;
+            for(int i = 0; i < count; i++) {
+                string letter = percentToLetterGrade(list[i]);
+                Console.WriteLine($"{i+1}: {list[i]}  ({letter})");
             }
         }
-
-        // - show stats
-        // - error handling
 
         // highestGrade
         // Arguments:
@@ -144,7 +188,6 @@ namespace GradeConverter
             return highest;
         }
         
-
         // lowestGrade
         // Arguments:
         //      List<double> list - list of grades to search
@@ -187,13 +230,25 @@ namespace GradeConverter
         // Arguments:
         //      none
         // Returns: int num - Number of grades user wants to input
-        private static int getNumGrades() {
+        private static int getNumGrades(bool add = false) {
             int num = 0;
             // ask user number of grades to input
-            Console.Write("How many grades do you have to convert this fine day? ");
+            if (add == true) {
+                Console.Write("How many grades do you want to add? ");
+            }
+            else {
+                Console.Write("How many grades do you want to input on this fine day? ");
+            }
             string numGradesRead = Console.ReadLine();
             try {
                 num = Int32.Parse(numGradesRead);
+                if(num <= 0) {
+                    throw new ArgumentOutOfRangeException();
+                }
+            }
+            catch (ArgumentOutOfRangeException) {
+                Console.WriteLine("Woooah there! We need the number of grades to enter!");
+                num = getNumGrades(add);
             }
             catch (Exception) {
                 throw;
@@ -202,7 +257,45 @@ namespace GradeConverter
             return num;
         }
  
- 
+        // showStats
+        // Summary: Give pretty output of grade stats
+        // Arguments: 
+        //      List<double> list - list of grades
+        // Returns: none
+        private static void showStats(List<double> list) {
+            int count = list.Count;
+            if (count == 0){
+                Console.WriteLine("Houston, we have a problem. There's nothing here.");
+                return;
+            }
+
+            double total = 0;
+            
+            foreach(double l in list) {
+                total = total + l;
+            }
+            double highest = highestGrade(list);
+            string highLetter = percentToLetterGrade(highest);
+
+            double lowest = lowestGrade(list);
+            string lowLetter = percentToLetterGrade(lowest);
+
+            double average = total / count;
+            string avgLetter = percentToLetterGrade(average);
+
+            Console.WriteLine("Grade Statistics");
+            Console.WriteLine("----------------");
+            Console.WriteLine($"Total number of grades: {count}");
+            Console.WriteLine($"Average Grade: {average} (Letter Grade {avgLetter})");
+            Console.WriteLine($"Highest grade: {highest} (Letter Grade {highLetter})");
+            Console.WriteLine($"Lowest grade: {lowest} (Letter Grade {lowLetter})");
+            Console.WriteLine("\nAll Grades: ");
+            listGrades(list);
+
+
+        }
+
+        // errorHandling
  
  
  
