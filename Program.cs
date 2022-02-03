@@ -225,14 +225,14 @@ namespace GradeConverter
             // welcome user
             Console.WriteLine($"Wonderful! Welcome, {firstName} {lastName}, to the Greated Converter of Grades this side of the Mississippi!");
 
-            name = $"{firstName} {lastName}";
+            name = firstName + " " + lastName;
             return name;
         }
-        
+
         // getNumGrades
-        // Summary: Prompt user for the number of grades that they want to enter
         // Arguments:
-        //      bool add - if this is the initial input or additional. default false, if true changes user prompt
+        //      bool add - if this is the initial input or additional. 
+        //          defaults to F, if true changes user prompt
         // Returns: int num - Number of grades user wants to input
         private static int getNumGrades(bool add = false) {
             int num = 0;

@@ -1,0 +1,16 @@
+C:\Users\Zack\Documents\VSCode\GradeConverter\GradeConverter\bin\Debug\net5.0\GradeConverter.exe
+C:\Users\Zack\Documents\VSCode\GradeConverter\GradeConverter\bin\Debug\net5.0\GradeConverter.deps.json
+C:\Users\Zack\Documents\VSCode\GradeConverter\GradeConverter\bin\Debug\net5.0\GradeConverter.runtimeconfig.json
+C:\Users\Zack\Documents\VSCode\GradeConverter\GradeConverter\bin\Debug\net5.0\GradeConverter.runtimeconfig.dev.json
+C:\Users\Zack\Documents\VSCode\GradeConverter\GradeConverter\bin\Debug\net5.0\GradeConverter.dll
+C:\Users\Zack\Documents\VSCode\GradeConverter\GradeConverter\bin\Debug\net5.0\ref\GradeConverter.dll
+C:\Users\Zack\Documents\VSCode\GradeConverter\GradeConverter\bin\Debug\net5.0\GradeConverter.pdb
+C:\Users\Zack\Documents\VSCode\GradeConverter\GradeConverter\obj\Debug\net5.0\GradeConverter.csproj.AssemblyReference.cache
+C:\Users\Zack\Documents\VSCode\GradeConverter\GradeConverter\obj\Debug\net5.0\GradeConverter.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Zack\Documents\VSCode\GradeConverter\GradeConverter\obj\Debug\net5.0\GradeConverter.AssemblyInfoInputs.cache
+C:\Users\Zack\Documents\VSCode\GradeConverter\GradeConverter\obj\Debug\net5.0\GradeConverter.AssemblyInfo.cs
+C:\Users\Zack\Documents\VSCode\GradeConverter\GradeConverter\obj\Debug\net5.0\GradeConverter.csproj.CoreCompileInputs.cache
+C:\Users\Zack\Documents\VSCode\GradeConverter\GradeConverter\obj\Debug\net5.0\GradeConverter.dll
+C:\Users\Zack\Documents\VSCode\GradeConverter\GradeConverter\obj\Debug\net5.0\ref\GradeConverter.dll
+C:\Users\Zack\Documents\VSCode\GradeConverter\GradeConverter\obj\Debug\net5.0\GradeConverter.pdb
+C:\Users\Zack\Documents\VSCode\GradeConverter\GradeConverter\obj\Debug\net5.0\GradeConverter.genruntimeconfig.cache
