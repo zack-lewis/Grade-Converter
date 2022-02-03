@@ -16,7 +16,7 @@ namespace GradeConverter
             string name = "";
 
             // Greet the user, get their name
-    //        name = greetUser();
+            name = greetUser();
 
             // Get the number of grades to input
             numGrades = getNumGrades();
@@ -59,6 +59,9 @@ namespace GradeConverter
             } while(additional == true);
 
             showStats(grades);
+
+
+            Console.WriteLine($"Thanks {name} for stopping by! See you again soon!");
 
         }
 
