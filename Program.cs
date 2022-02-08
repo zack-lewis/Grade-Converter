@@ -297,4 +297,55 @@ namespace GradeConverter
             listGrades(list);
         }
     }
+
+    class Grade {
+        private double grade;
+        private string letter;
+
+        Grade(double value) => this.setGrade(value);
+        Grade() => this.setGrade(0);
+
+        public double getGrade()
+        {
+            return grade;
+        }
+
+        public void setGrade(double value)
+        {
+            // Check for Out Of Range exception
+            if(value < 0 || value > 110) {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            // Set the grade variable
+            grade = value;
+
+            // Define the corresponding letter grade
+            if(grade < 60) {
+                letter = "F";
+            }
+            else if(grade < 70) {
+                letter = "D";
+            }
+            else if(grade < 80) {
+                letter = "C";
+            }
+            else if(grade < 90) {
+                letter = "B";
+            }
+            else if(grade < 100) {
+                letter = "A";
+            }
+            else {
+                letter = "A+";
+            }
+        }
+
+
+
+        public string getLetter()
+        {
+            return letter;
+        }
+    }
 }
