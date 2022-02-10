@@ -12,6 +12,8 @@ namespace GradeConverter
             int numGrades = 0;
             string name = "";
 
+            Console.WriteLine("Welcome to the Mighty Grade Converter. ");
+
             // Greet the user, get their name
             name = greetUser();
 
@@ -73,7 +75,7 @@ namespace GradeConverter
             string name;
 
             // ask user name
-            Console.WriteLine("Welcome to the Mighty Grade Converter. May I get your first and last name?");
+            Console.WriteLine("May I get your first and last name?");
             Console.Write("First Name: ");
             firstName = Console.ReadLine();
             Console.Write("Last Name: ");
@@ -122,9 +124,9 @@ namespace GradeConverter
         // addGradeToList
         // Summary: Take a grade and a list, add the grade to the list, return the list
         // Arguments: 
-        //      double grade - grade to add to list
-        //      List<double> list - initial list in which to add grade
-        // Returns: List<double> list - List with grade added
+        //      Grade g - Grade object to add to list
+        //      List<Grade> list - initial list in which to add Grade object
+        // Returns: List<Grade> list - List with Grade object added
         private static List<Grade> addGradeToList(Grade g, List<Grade> list) {
             list.Add(g);
             return list;
@@ -134,7 +136,7 @@ namespace GradeConverter
         // Summary: Prompt user for a grade and return it as a double
         // Arguments: 
         //      string prompt - Prompt to use for user input
-        // Returns: double grade - Grade from user 
+        // Returns: Grade g - Grade object from user 
         private static Grade gradePrompt(string prompt) {
             
                 // temp string for input
@@ -179,7 +181,7 @@ namespace GradeConverter
 	    // listGrades
         // Summary: Take a list of grades and output in pretty format
         // Arguments:
-        //      List<double> list - list of grades to display
+        //      List<Grade> list - list of Grade objects to display
         // Returns: none
         private static void listGrades(List<Grade> list) {
             int count = list.Count;
@@ -193,7 +195,7 @@ namespace GradeConverter
 		// showStats
         // Summary: Give pretty output of grade stats
         // Arguments: 
-        //      List<double> list - list of grades
+        //      List<Grade> list - list of grades
         // Returns: none
         private static void showStats(List<Grade> list) {
             int count = list.Count;
@@ -207,30 +209,25 @@ namespace GradeConverter
             foreach(Grade l in list) {
                 total = total + l.getGradePercent();
             }
+
             Grade highest = highestGrade(list);
-            string highLetter = highest.getGradeLetter();
-
             Grade lowest = lowestGrade(list);
-            string lowLetter = lowest.getGradeLetter();
-
-            double average = total / count;
-            Grade avg = new Grade(average);
-            string avgLetter = avg.getGradeLetter();
+            Grade avg = averageGrade(list);
 
             Console.WriteLine("Grade Statistics");
             Console.WriteLine("----------------");
             Console.WriteLine($"Total number of grades: {count}");
-            Console.WriteLine($"Average Grade: {average} (Letter Grade {avgLetter})");
-            Console.WriteLine($"Highest grade: {highest} (Letter Grade {highLetter})");
-            Console.WriteLine($"Lowest grade: {lowest} (Letter Grade {lowLetter})");
+            Console.WriteLine($"Average Grade: {avg.getGradePercent()} (Letter Grade {avg.getGradeLetter()})");
+            Console.WriteLine($"Highest grade: {highest.getGradePercent()} (Letter Grade {highest.getGradeLetter()})");
+            Console.WriteLine($"Lowest grade: {lowest.getGradePercent()} (Letter Grade {lowest.getGradeLetter()})");
             Console.WriteLine("\nAll Grades: ");
             listGrades(list);
         }
 	
 		// highestGrade
         // Arguments:
-        //      List<double> list - list of grades to search
-        // Returns: double highest - Highest grade from list as a percentage 
+        //      List<Grade> list - list of Grade objects to search
+        // Returns: Grade highest - Highest grade from list as a percentage 
         private static Grade highestGrade(List<Grade> list) {
             Grade highest = new Grade(0);
             foreach(Grade g in list) {
@@ -243,8 +240,8 @@ namespace GradeConverter
         
         // lowestGrade
         // Arguments:
-        //      List<double> list - list of grades to search
-        // Returns: double lowest - Lowest grade from list as a percentage 
+        //      List<Grade> list - list of grades to search
+        // Returns: Grade lowest - Lowest grade from list as a percentage 
         private static Grade lowestGrade(List<Grade> list) {
             Grade lowest = new Grade(999);
             foreach(Grade g in list) {
@@ -255,21 +252,54 @@ namespace GradeConverter
             return lowest;
         }
 	
-	}
+        // averageGrade
+        // Summary: Take a list of Grade objects and return the average as a Grade object
+        // Arguments: 
+        //      List<Grade> list - list of Grade objects
+        // Returns: Grade g - New Grade object with value of list average
+        private static Grade averageGrade(List<Grade> list) {
+            Grade g = new Grade();
+            int numGrades = list.Count;
+            double total = 0;
+
+            foreach(Grade l in list) {
+                total = total + l.getGradePercent();
+            }
+
+            g.setGradePercent(total/numGrades);
+
+            return g;
+        }
+    
+    }
 
     class Grade {
+        // Upper limit of Grades
         const double upperLimit = 110;
+
+        // Grade as Percentage        
         private double gradePercent;
+
+        // Grade as Letter
         private string gradeLetter;
 
+        // Constructors
         public Grade(double value) => this.setGradePercent(value);
         public Grade() => this.setGradePercent(0);
 
+        // getGradePercent
+        // Summary: Return the gradePercent value as a double
+        // Arguments: none
+        // Returns: double gradePercent
         public double getGradePercent()
         {
             return gradePercent;
         }
 
+        // setGradePercent
+        // Summary: Set the Grade Percent value
+        // Arguments: double value - Percent to set 
+        // Returns: none
         public void setGradePercent(double value)
         {
             // Check for Out Of Range exception
@@ -304,8 +334,10 @@ namespace GradeConverter
             }
         }
 
-
-
+        // getGradeLetter
+        // Summary: Get the Letter Grade corresponding to the Percent Grade value
+        // Arguments: none
+        // Returns: string gradeLetter
         public string getGradeLetter()
         {
             return gradeLetter;
