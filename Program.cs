@@ -5,13 +5,10 @@ namespace GradeConverter
 {
     class Program
     {
-        // GLOBAL VARIABLES
-        const double upperLimit = 110;
-
         static void Main(string[] args)
         {
             // VARIABLES
-            List<double> grades = new List<double>();
+            List<Grade> grades = new List<Grade>();
             int numGrades = 0;
             string name = "";
 
@@ -25,7 +22,7 @@ namespace GradeConverter
             Console.WriteLine("We can do that. Let's get them input into our system. Enter them below.");
             for(int i = 0; i < numGrades; i++) {
                 int p = i + 1;
-                double input = gradePrompt(p.ToString());
+                Grade input = gradePrompt(p.ToString());
                 grades = addGradeToList(input, grades);
             }
             
@@ -43,7 +40,7 @@ namespace GradeConverter
                     int moreGrades = getNumGrades(true);
                     for(int i = 0; i < moreGrades; i++) {
                         int p = i + 1;
-                        double input = gradePrompt(p.ToString());
+                        Grade input = gradePrompt(p.ToString());
                         grades = addGradeToList(input, grades);
                     }
                     additional = true;
@@ -65,145 +62,6 @@ namespace GradeConverter
 
         }
 
-        // gradePrompt
-        // Summary: Prompt user for a grade and return it as a double
-        // Arguments: 
-        //      string prompt - Prompt to use for user input
-        // Returns: double grade - Grade from user 
-        private static double gradePrompt(string prompt) {
-            
-                // temp string for input
-                string temp = "";
-                double grade = 0;
-
-                // ask user for input
-                Console.Write($"{prompt}: ");
-                temp = Console.ReadLine();
-
-                try {
-                    // if empty, reprompt
-                    if (temp == "") {
-                        throw new ArgumentNullException();
-                    }
-                    
-                    // if non-numeric, throw exception
-                    // grade = Int32.Parse(temp);
-                    grade = Double.Parse(temp);
-
-                    // if outside of bounds, throw exception
-                    if (grade > upperLimit || grade < 0) {
-                        throw new ArgumentOutOfRangeException();
-                    }
-                     
-                }
-                catch (FormatException) {
-                    Console.WriteLine("Sorry, bad format. Let's try that again.");
-                    grade = gradePrompt(prompt);
-                }
-                catch (ArgumentNullException) {
-                    Console.WriteLine("Grade cannot be empty!");
-                    grade = gradePrompt(prompt);
-                }
-                catch (ArgumentOutOfRangeException) {
-                    Console.WriteLine($"Sorry! Grade cannot be below 0 or above {upperLimit}");
-                    grade = gradePrompt(prompt);
-                }
-                catch (Exception) {
-                    throw;
-                }
-
-                return grade;
-        }
-
-        // addGradeToList
-        // Summary: Take a grade and a list, add the grade to the list, return the list
-        // Arguments: 
-        //      double grade - grade to add to list
-        //      List<double> list - initial list in which to add grade
-        // Returns: List<double> list - List with grade added
-        private static List<double> addGradeToList(double grade, List<double> list) {
-            try {
-                list.Add(grade);
-            }
-            catch (Exception) {
-                throw;
-            }
-
-            return list;
-        }
-
-        // percentToLetterGrade
-        // Summary: Take Numeric grade (as a percentage) and return a Letter grade (whole letters only)
-        // Arguments:
-        //      double grade - Grade to convert from Percent to Letter
-        // Return: string letterGrade - Equivilent letter grade in string format
-        private static string percentToLetterGrade(double grade) {
-            string letterGrade = "";
-            if(grade <= 60) {
-                letterGrade = "F";
-            }
-            else if(grade <= 70) {
-                letterGrade = "D";
-            }
-            else if(grade <= 80) {
-                letterGrade = "C";
-            }
-            else if(grade <= 90) {
-                letterGrade = "B";
-            }
-            else if(grade <= 100) {
-                letterGrade = "A";
-            }
-            else if(grade > 100 && grade <= upperLimit) {
-                letterGrade = "A+";
-            }
-            else {
-                letterGrade = "U"; // Return Unsatisfactory if all else fails
-            }
-
-            return letterGrade;
-        }
-        
-        // listGrades
-        // Summary: Take a list of grades and output in pretty format
-        // Arguments:
-        //      List<double> list - list of grades to display
-        // Returns: none
-        private static void listGrades(List<double> list) {
-            int count = list.Count;
-            for(int i = 0; i < count; i++) {
-                string letter = percentToLetterGrade(list[i]);
-                Console.WriteLine($"{i+1}: {list[i]}  ({letter})");
-            }
-        }
-
-        // highestGrade
-        // Arguments:
-        //      List<double> list - list of grades to search
-        // Returns: double highest - Highest grade from list as a percentage 
-        private static double highestGrade(List<double> list) {
-            double highest = 0;
-            foreach(double g in list) {
-                if(g > highest) {
-                    highest = g;
-                }
-            }
-            return highest;
-        }
-        
-        // lowestGrade
-        // Arguments:
-        //      List<double> list - list of grades to search
-        // Returns: double lowest - Lowest grade from list as a percentage 
-        private static double lowestGrade(List<double> list) {
-            double lowest = 999;
-            foreach(double g in list) {
-                if(g < lowest) {
-                    lowest = g;
-                }
-            }
-            return lowest;
-        }
 
         // greetUser
         // Arguments:
@@ -260,13 +118,84 @@ namespace GradeConverter
 
             return num;
         }
- 
-        // showStats
+
+        // addGradeToList
+        // Summary: Take a grade and a list, add the grade to the list, return the list
+        // Arguments: 
+        //      double grade - grade to add to list
+        //      List<double> list - initial list in which to add grade
+        // Returns: List<double> list - List with grade added
+        private static List<Grade> addGradeToList(Grade g, List<Grade> list) {
+            list.Add(g);
+            return list;
+        }
+		
+		// gradePrompt
+        // Summary: Prompt user for a grade and return it as a double
+        // Arguments: 
+        //      string prompt - Prompt to use for user input
+        // Returns: double grade - Grade from user 
+        private static Grade gradePrompt(string prompt) {
+            
+                // temp string for input
+                const int upperLimit = 110;
+                string input = "";
+                Grade g = new Grade();
+
+                // ask user for input
+                Console.Write($"{prompt}: ");
+                input = Console.ReadLine();
+
+                try {
+                    // if empty, reprompt
+                    if (input == "") {
+                        throw new ArgumentNullException();
+                    }
+                    
+                    // if non-numeric, throw exception
+                    // grade = Int32.Parse(temp);
+                    g.setGradePercent(Double.Parse(input));
+                   
+                }
+                catch (FormatException) {
+                    Console.WriteLine("Sorry, bad format. Let's try that again.");
+                    g = gradePrompt(prompt);
+                }
+                catch (ArgumentNullException) {
+                    Console.WriteLine("Grade cannot be empty!");
+                    g = gradePrompt(prompt);
+                }
+                catch (ArgumentOutOfRangeException) {
+                    Console.WriteLine($"Sorry! Grade cannot be below 0 or above {upperLimit}");
+                    g = gradePrompt(prompt);
+                }
+                catch (Exception) {
+                    throw;
+                }
+
+                return g;
+        }
+    
+	    // listGrades
+        // Summary: Take a list of grades and output in pretty format
+        // Arguments:
+        //      List<double> list - list of grades to display
+        // Returns: none
+        private static void listGrades(List<Grade> list) {
+            int count = list.Count;
+            for(int i = 0; i < count; i++) {
+                string letter = list[i].getGradeLetter();
+                Console.WriteLine($"{i+1}: {list[i]}  ({letter})");
+            }
+        }
+	
+	
+		// showStats
         // Summary: Give pretty output of grade stats
         // Arguments: 
         //      List<double> list - list of grades
         // Returns: none
-        private static void showStats(List<double> list) {
+        private static void showStats(List<Grade> list) {
             int count = list.Count;
             if (count == 0){
                 Console.WriteLine("Houston, we have a problem. There's nothing here.");
@@ -275,17 +204,18 @@ namespace GradeConverter
 
             double total = 0;
             
-            foreach(double l in list) {
-                total = total + l;
+            foreach(Grade l in list) {
+                total = total + l.getGradePercent();
             }
-            double highest = highestGrade(list);
-            string highLetter = percentToLetterGrade(highest);
+            Grade highest = highestGrade(list);
+            string highLetter = highest.getGradeLetter();
 
-            double lowest = lowestGrade(list);
-            string lowLetter = percentToLetterGrade(lowest);
+            Grade lowest = lowestGrade(list);
+            string lowLetter = lowest.getGradeLetter();
 
             double average = total / count;
-            string avgLetter = percentToLetterGrade(average);
+            Grade avg = new Grade(average);
+            string avgLetter = avg.getGradeLetter();
 
             Console.WriteLine("Grade Statistics");
             Console.WriteLine("----------------");
@@ -296,56 +226,89 @@ namespace GradeConverter
             Console.WriteLine("\nAll Grades: ");
             listGrades(list);
         }
-    }
+	
+		// highestGrade
+        // Arguments:
+        //      List<double> list - list of grades to search
+        // Returns: double highest - Highest grade from list as a percentage 
+        private static Grade highestGrade(List<Grade> list) {
+            Grade highest = new Grade(0);
+            foreach(Grade g in list) {
+                if(g.getGradePercent() > highest.getGradePercent()) {
+                    highest = g;
+                }
+            }
+            return highest;
+        }
+        
+        // lowestGrade
+        // Arguments:
+        //      List<double> list - list of grades to search
+        // Returns: double lowest - Lowest grade from list as a percentage 
+        private static Grade lowestGrade(List<Grade> list) {
+            Grade lowest = new Grade(999);
+            foreach(Grade g in list) {
+                if(g.getGradePercent() < lowest.getGradePercent()) {
+                    lowest = g;
+                }
+            }
+            return lowest;
+        }
+	
+	}
 
     class Grade {
-        private double grade;
-        private string letter;
+        const double upperLimit = 110;
+        private double gradePercent;
+        private string gradeLetter;
 
-        Grade(double value) => this.setGrade(value);
-        Grade() => this.setGrade(0);
+        public Grade(double value) => this.setGradePercent(value);
+        public Grade() => this.setGradePercent(0);
 
-        public double getGrade()
+        public double getGradePercent()
         {
-            return grade;
+            return gradePercent;
         }
 
-        public void setGrade(double value)
+        public void setGradePercent(double value)
         {
             // Check for Out Of Range exception
-            if(value < 0 || value > 110) {
+            if(value < 0 || value > upperLimit) {
                 throw new ArgumentOutOfRangeException();
             }
 
             // Set the grade variable
-            grade = value;
+            gradePercent = value;
 
-            // Define the corresponding letter grade
-            if(grade < 60) {
-                letter = "F";
+            // Define the corresponding gradeLetter grade
+            if(gradePercent < 60) {
+                gradeLetter = "F";
             }
-            else if(grade < 70) {
-                letter = "D";
+            else if(gradePercent < 70) {
+                gradeLetter = "D";
             }
-            else if(grade < 80) {
-                letter = "C";
+            else if(gradePercent < 80) {
+                gradeLetter = "C";
             }
-            else if(grade < 90) {
-                letter = "B";
+            else if(gradePercent < 90) {
+                gradeLetter = "B";
             }
-            else if(grade < 100) {
-                letter = "A";
+            else if(gradePercent < 100) {
+                gradeLetter = "A";
+            }
+            else if(gradePercent > 100 && gradePercent < upperLimit) {
+                gradeLetter = "A+";
             }
             else {
-                letter = "A+";
+                gradeLetter = "Unsatisfactory";
             }
         }
 
 
 
-        public string getLetter()
+        public string getGradeLetter()
         {
-            return letter;
+            return gradeLetter;
         }
     }
 }
