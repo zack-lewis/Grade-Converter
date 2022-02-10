@@ -287,6 +287,8 @@ namespace GradeConverter
         public Grade(double value) => this.setGradePercent(value);
         public Grade() => this.setGradePercent(0);
 
+        // Public Methods
+
         // getGradePercent
         // Summary: Return the gradePercent value as a double
         // Arguments: none
