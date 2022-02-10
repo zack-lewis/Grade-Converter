@@ -243,7 +243,7 @@ namespace GradeConverter
         //      List<Grade> list - list of grades to search
         // Returns: Grade lowest - Lowest grade from list as a percentage 
         private static Grade lowestGrade(List<Grade> list) {
-            Grade lowest = new Grade(999);
+            Grade lowest = new Grade(110);
             foreach(Grade g in list) {
                 if(g.getGradePercent() < lowest.getGradePercent()) {
                     lowest = g;
@@ -323,10 +323,10 @@ namespace GradeConverter
             else if(gradePercent < 90) {
                 gradeLetter = "B";
             }
-            else if(gradePercent < 100) {
+            else if(gradePercent <= 100) {
                 gradeLetter = "A";
             }
-            else if(gradePercent > 100 && gradePercent < upperLimit) {
+            else if(gradePercent > 100 && gradePercent <= upperLimit) {
                 gradeLetter = "A+";
             }
             else {
